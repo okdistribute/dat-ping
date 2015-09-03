@@ -4,8 +4,10 @@ var transportStream = require('transport-stream')
 var concat = require('concat-stream')
 var debug = require('debug')('dat-ping')
 
-module.exports = function (source, cb) {
+module.exports = function ping (source, opts, cb) {
   // clean the url
+  if (typeof opts === 'function') return ping(source, {}, opts)
+
   var u = url.parse(source)
 
   // figure out if we're doing http or ssh
@@ -15,7 +17,7 @@ module.exports = function (source, cb) {
   } else {
     debug('creating general transport to', source)
     var transportOpts = {
-      command: (args.bin || 'dat') + ' replicate -'
+      command: (opts.bin || 'dat') + ' status --json'
     }
     var transport = transportStream(transportOpts)
     try {

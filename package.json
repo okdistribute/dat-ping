@@ -6,6 +6,9 @@
   "scripts": {
     "test": "node test"
   },
+  "bin": {
+    "dat-ping": "cli.js"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/karissa/dat-ping.git"
@@ -22,5 +25,9 @@
     "hyperquest": "^1.2.0",
     "tape": "^4.2.0",
     "transport-stream": "^1.4.4"
+  },
+  "devDependencies": {
+    "dat-rest-server": "^1.0.4",
+    "dat": "^7.0.4"
   }
 }

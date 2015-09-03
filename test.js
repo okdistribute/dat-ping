@@ -4,7 +4,7 @@ var dat = require('dat')
 var tmp = require('os').tmpdir()
 var datServer = require('dat-rest-server')
 
-test('server is reachable', function (t) {
+test('http server is reachable', function (t) {
   var args = {
     path: tmp,
     createIfMissing: true
@@ -19,5 +19,4 @@ test('server is reachable', function (t) {
       server.close()
     })
   })
-
 })
