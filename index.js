@@ -1,5 +1,7 @@
+var url = require('url')
 var hyperquest = require('hyperquest')
 var transportStream = require('transport-stream')
+var concat = require('concat-stream')
 var debug = require('debug')('dat-ping')
 
 module.exports = function (source, cb) {
