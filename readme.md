@@ -4,6 +4,7 @@ Ping a dat server (http or ssh) to get status information. Works with ssh, on an
 
 [![NPM](https://nodei.co/npm/dat-ping.png)](https://nodei.co/npm/dat-ping/)
 
+[![Travis](http://img.shields.io/travis/karissa/dat-ping.svg?style=flat)](https://travis-ci.org/karissa/dat-ping)
 ```
 npm install -g dat-ping
 ```
@@ -42,4 +43,3 @@ datPing(mydat, opts, function (err, status) {
   console.log(status)
 })
 ```
-
