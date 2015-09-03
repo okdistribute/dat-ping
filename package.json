@@ -1,0 +1,19 @@
+{
+  "name": "dat-ping",
+  "version": "1.0.0",
+  "description": "ping a dat",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/karissa/dat-ping.git"
+  },
+  "author": "Karissa McKelvey <karissa@karissamck.com> (http://karissamck.com/)",
+  "license": "BSD-2",
+  "bugs": {
+    "url": "https://github.com/karissa/dat-ping/issues"
+  },
+  "homepage": "https://github.com/karissa/dat-ping"
+}
