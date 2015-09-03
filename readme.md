@@ -12,18 +12,21 @@ npm install -g dat-ping
 dat-ping <location> [--bin=path/to/dat/executable]
 ```
 
+### HTTP, SSH, filesystem, and others
 ```
+$ dat-ping http://localhost:6443
 $ dat-ping ~/dev/dats/eukaryota.dathub.org/
+```
+
+Returns
+
+```
 {"transaction":false,"checkout":false,"heads":1,"modified":"2015-09-01T22:53:17.775Z","datasets":2,"rows":2686,"files":2,"versions":4,"size":1704743,"version":"a2c77bedfb59f2237825614b57109ef35e097f5b1bf9320e9a52ef90768d566a"}
+```
 
 ```
 $ dat-ping /there/is/no/dat/here
 Could not find a dat there!
-```
-
-```
-dat-ping http://localhost:6443
-{"transaction":false,"checkout":false,"heads":1,"modified":"2015-09-01T22:53:17.775Z","datasets":2,"rows":2686,"files":2,"versions":4,"size":1704743,"version":"a2c77bedfb59f2237825614b57109ef35e097f5b1bf9320e9a52ef90768d566a"}
 ```
 
 ### javascript usage
