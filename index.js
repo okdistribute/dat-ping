@@ -3,6 +3,8 @@ var hyperquest = require('hyperquest')
 var transportStream = require('transport-stream')
 var concat = require('concat-stream')
 var debug = require('debug')('dat-ping')
+var prettyBytes = require('pretty-bytes')
+var relativeDate = require('relative-date')
 
 module.exports = function ping (source, opts, cb) {
   // clean the url
@@ -30,10 +32,12 @@ module.exports = function ping (source, opts, cb) {
 
   stream.pipe(concat(function (buf) {
     var status = JSON.parse(buf.toString())
-    if (status.status) status = status.status
-
     if (status.error) {
-      return console.error(status.message)
+      return cb(new Error(status.message))
+    }
+    if (opts.pretty) {
+      if (typeof status.size === 'number') status.size = prettyBytes(status.size)
+      status.modified = relativeDate(status.modified)
     }
     cb(null, status)
   }))
@@ -48,4 +52,3 @@ module.exports = function ping (source, opts, cb) {
     return cb(err)
   })
 }
-
