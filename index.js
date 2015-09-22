@@ -7,7 +7,6 @@ var prettyBytes = require('pretty-bytes')
 var relativeDate = require('relative-date')
 
 module.exports = function ping (source, opts, cb) {
-  // clean the url
   if (typeof opts === 'function') return ping(source, {}, opts)
 
   var u = url.parse(source)
@@ -25,16 +24,13 @@ module.exports = function ping (source, opts, cb) {
     try {
       var stream = transport(source)
     } catch (err) {
-      cb(new Error('Could not figure out transport type for ' + source))
-      return
+      return cb(new Error('Could not figure out transport type for ' + source))
     }
   }
 
   stream.pipe(concat(function (buf) {
     var status = JSON.parse(buf.toString())
-    if (status.error) {
-      return cb(new Error(status.message))
-    }
+    if (status.error) return cb(new Error(status.message))
     if (opts.pretty) {
       if (typeof status.size === 'number') status.size = prettyBytes(status.size)
       status.modified = relativeDate(status.modified)
