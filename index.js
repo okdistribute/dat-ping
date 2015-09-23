@@ -29,7 +29,11 @@ module.exports = function ping (source, opts, cb) {
   }
 
   stream.pipe(concat(function (buf) {
-    var status = JSON.parse(buf.toString())
+    try {
+      var status = JSON.parse(buf.toString())
+    } catch (err) {
+      return cb(err)
+    }
     if (status.error) return cb(new Error(status.message))
     if (opts.pretty) {
       if (typeof status.size === 'number') status.size = prettyBytes(status.size)
