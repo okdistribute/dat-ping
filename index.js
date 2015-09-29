@@ -1,6 +1,7 @@
 var url = require('url')
 var hyperquest = require('hyperquest')
 var transportStream = require('transport-stream')
+var peek = require('peek-stream')
 var concat = require('concat-stream')
 var debug = require('debug')('dat-ping')
 var prettyBytes = require('pretty-bytes')
@@ -28,9 +29,9 @@ module.exports = function ping (source, opts, cb) {
     }
   }
 
-  stream.pipe(concat(function (buf) {
+  var peeker = peek(function (data, swap) {
     try {
-      var status = JSON.parse(buf.toString())
+      var status = JSON.parse(data.toString())
     } catch (err) {
       return cb(err)
     }
@@ -40,7 +41,9 @@ module.exports = function ping (source, opts, cb) {
       status.modified = relativeDate(status.modified)
     }
     cb(null, status)
-  }))
+})
+
+  var stream = stream.pipe(peeker)
 
   stream.on('error', function (err) {
     if (err.level === 'client-authentication') {
