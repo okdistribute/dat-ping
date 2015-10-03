@@ -16,6 +16,7 @@ module.exports = function ping (source, opts, cb) {
   if (u.protocol === 'http:') {
     debug('creating http request to', source)
     var stream = hyperquest(source)
+    stream.on('error', onerror)
   } else {
     debug('creating general transport to', source)
     var transportOpts = {
@@ -44,14 +45,15 @@ module.exports = function ping (source, opts, cb) {
 })
 
   var stream = stream.pipe(peeker)
+  stream.on('error', onerror)
 
-  stream.on('error', function (err) {
+  function onerror (err) {
     if (err.level === 'client-authentication') {
       return cb(new Error('Username or password is incorrect.'))
     }
-    if (err.message.indexOf('ENOENT') > -1) {
+    if (err.message.indexOf('ENOENT') > -1 || err.message.indexOf('ECONNREFUSED') > -1) {
       return cb(new Error('Could not find a dat there!'))
     }
     return cb(err)
-  })
+  }
 }
